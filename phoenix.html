@@ -1,0 +1,56 @@
+<!-- Phoenix Compact Bundle -->
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+  </head>
+  
+  <body>
+
+    <div id="eventDisplay"></div>
+    <!-- online lib catch -->
+    <script src="https://cdn.jsdelivr.net/npm/three/build/three.min.js"></script> 
+    <script src="https://cdn.jsdelivr.net/npm/phoenix-event-display/dist/bundle/phoenix.min.js"></script>
+    <!-- offline lib catch -->
+    <!--
+    <script src="src/three.min.js"></script> 
+    <script src="src/phoenix.min.js"></script>
+    -->
+
+    <script>
+      // Create the event display
+      const eventDisplay = new EventDisplay();
+      /** The root Phoenix menu node. */
+      phoenixMenuRoot = new PhoenixMenuNode("Phoenix Menu");
+      // get url params
+      const params = new URLSearchParams(window.location.search);
+
+      // Define the configuration
+      const configuration = {
+        elementId: 'eventDisplay',
+        eventDataLoader: new PhoenixLoader(), // or some other event data loader
+        defaultView: [400, 0, 400],
+        phoenixMenuRoot: this.phoenixMenuRoot,
+        // ... other configuration options
+      };
+
+      // Load detector geometry
+      ScriptLoader.loadJSRootScripts().then((JSROOT) => {
+            eventDisplay.loadRootGeometry(JSROOT, params.get("geometry") /*'./data/bmnsim.root-geometry.root'*/, 'FAIRGeom', 'geometry', 'Geometry');
+	  });
+      
+      // Initialize the event display with the configuration
+      eventDisplay.init(configuration);
+      
+      // Load event data objects in json format
+	  fetch(params.get("objects") /*'data/bmnsim.root-objects.json'*/)
+  		.then((res) => res.json())
+  		.then((res) => {
+    			eventDisplay.parsePhoenixEvents(res);
+  	});
+
+    // ... other event display functions
+    </script>
+
+  </body>
+</html>
