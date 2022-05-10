@@ -137,14 +137,14 @@ void phd(TString inFile = "~/bmnroot/macro/run/bmnsim.root", bool removeConverte
 	//                                                                            //
 	////////////////////////////////////////////////////////////////////////////////
 	
-    // run converter and get result export paths
-    //  [0] - idx of geometry file path
-    //  [1] - idx of objects file path
-    string* exportPaths = convert(inFile);
+	// run converter and get result export paths
+	//  [0] - idx of geometry file path
+	//  [1] - idx of objects file path
+	string* exportPaths = convert(inFile);
 	// out paths
 	cout << "[*] Input files:" << endl;
-    cout << ">>  " << exportPaths[0] << endl;
-    cout << ">>  " << exportPaths[1] << endl;
+	cout << ">>  " << exportPaths[0] << endl;
+	cout << ">>  " << exportPaths[1] << endl;
 
 	// set server data path
 	string sDataPath = getFilePath(exportPaths[0]);
